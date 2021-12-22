@@ -31,9 +31,19 @@ void conduit::MinecraftScanWorker::on_write(const boost::system::error_code& ec,
         return;
     }
 
-    boost::asio::async_read(socket, boost::asio::buffer(read_buffer), boost::asio::transfer_at_least(5 /* Minimum VarInt Length */), 
-        boost::bind(&MinecraftScanWorker::on_write, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
-    state = WorkerState::reading_packet_length;
+    unsigned char packet_length[5];
+    std::memset(packet_length, 0, sizeof(packet_length));
+
+    boost::asio::async_read(socket, boost::asio::buffer(packet_length, sizeof(packet_length)), boost::asio::transfer_exactly(sizeof(packet_length)),
+        [&](const boost::system::error_code& ec, std::size_t bytes_transferred) {
+
+            for (auto& c : packet_length) {
+                std::cout << (int)c << " ";
+            }
+            std::cout << '\n';
+            int val = conduit::decode_varint(packet_length);
+            std::cout << val << '\n';
+        });
 }
 
 void conduit::MinecraftScanWorker::on_read(const boost::system::error_code& ec, std::size_t bytes_transferred) {
@@ -43,12 +53,6 @@ void conduit::MinecraftScanWorker::on_read(const boost::system::error_code& ec, 
         return;
     }
 
-    if (state == WorkerState::reading_packet_length) {
-        int length = conduit::decode_varint(read_buffer);
-        std::cout << "woo length is " << length << "!!!\n";
-
-        state = WorkerState::reading_packet;
-    }
 }
 
 std::vector<unsigned char> conduit::MinecraftScanWorker::build_request() {
