@@ -3,6 +3,7 @@
 #include <boost/asio.hpp>
 #include <chrono>
 #include "scanworker.hpp"
+#include "helpers.hpp"
 
 int main(int argc, char **argv) {
     argparse::ArgumentParser parser {"Conduit"};

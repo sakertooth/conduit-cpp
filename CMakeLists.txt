@@ -4,10 +4,10 @@ project(conduit VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-set(CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 find_package(Boost REQUIRED system)
 
-add_executable(conduit src/main.cpp src/scanworker.cpp src/mcstreams.cpp)
+add_executable(conduit src/main.cpp src/scanworker.cpp src/helpers.cpp)
 target_include_directories(conduit PRIVATE include)
 target_link_libraries(conduit PRIVATE Boost::system)
 

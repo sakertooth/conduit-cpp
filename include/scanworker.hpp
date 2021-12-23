@@ -14,13 +14,12 @@ namespace conduit {
 
     private:
 
-        void on_connect(const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint& endpoint);
-        void on_write(const boost::system::error_code& ec, std::size_t bytes_transferred);
-        void on_read(const boost::system::error_code& ec, std::size_t bytes_transferred);
+        void handle_connect(const boost::system::error_code& ec, const boost::asio::ip::tcp::endpoint& endpoint);
+        void handle_write(const boost::system::error_code& ec, std::size_t bytes_transferred);
+        void handle_read(const boost::system::error_code& ec, std::size_t bytes_transferred, std::shared_ptr<std::vector<std::byte>> read_buffer);
         
-        std::vector<unsigned char> build_request();
+        std::vector<std::byte> build_request();
 
-        std::vector<unsigned char> read_buffer;
         boost::asio::ip::tcp::endpoint endpoint;
         boost::asio::ip::tcp::socket socket;
         WorkerState state;
