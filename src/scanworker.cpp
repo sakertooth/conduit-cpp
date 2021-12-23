@@ -48,7 +48,7 @@ void conduit::MinecraftScanWorker::handle_read(const boost::system::error_code& 
     auto packet_length = std::make_shared<int>(conduit::read_varint(read_buffer->data()));
     read_buffer->resize(read_buffer->size() + *packet_length);
 
-    boost::asio::async_read(socket, boost::asio::buffer(*read_buffer), boost::asio::transfer_exactly(*packet_length), [&](const boost::system::error_code& ec, std::size_t bytes_transferred) {
+    boost::asio::async_read(socket, boost::asio::buffer(*read_buffer), boost::asio::transfer_exactly(*packet_length), [=](const boost::system::error_code& ec, std::size_t bytes_transferred) {
             std::cout << "woo: " << *packet_length << '\n';        
     });
 }

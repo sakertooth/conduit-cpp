@@ -34,26 +34,14 @@ std::vector<std::byte> conduit::write_string(const std::string& str) {
 }
 
 int conduit::read_varint(std::byte *buffer) {
-    int value = 0;
-    int length = 0;
-
+    int result = 0;
+    int shift = 0;
     int buffer_pos = 0;
-    std::byte currentByte;
 
     while (true) {
-        currentByte = *(buffer + buffer_pos);
-        value |= static_cast<int>((currentByte & static_cast<std::byte>(0x7F)) << (length * 7));
-        
-        length += 1;
-        if (length > 5) {
-            throw std::out_of_range("VarInt is too big");
-        }
-
-        if ((value & 0x80) != 0x80) {
-            break;
-        }
+        std::byte current_byte = static_cast<std::byte>(*(buffer + buffer_pos));
+        result |= (current_byte & 0x7F) << shift;
     }
-    return value;
 }
 
 std::string conduit::read_string(std::byte *buffer) {
