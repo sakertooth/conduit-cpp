@@ -1,20 +1,16 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(conduit VERSION 0.1.0)
 
-include(CTest)
-enable_testing()
+set(CMAKE_CXX_STANDARD 20)
 
-set(CMAKE_CXX_STANDARD 17)
-find_package(Boost REQUIRED system)
+find_package(Boost REQUIRED system thread fiber context coroutine)
 
-add_executable(conduit src/main.cpp src/scanworker.cpp src/helpers.cpp)
-target_include_directories(conduit PRIVATE include)
-target_link_libraries(conduit PRIVATE Boost::system)
-
-if(UNIX)
-    target_link_libraries(conduit PRIVATE pthread)
-endif()
-
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
+add_executable(conduit 
+                        src/main.cpp 
+                        src/net_parser.cpp 
+                        src/mc_ping.cpp
+                        src/mc_output_stream.cpp
+                        src/mc_input_stream.cpp)
+                        
+target_include_directories(conduit PRIVATE include Boost::headers)
+target_link_libraries(conduit PRIVATE Boost::system Boost::thread Boost::fiber Boost::context Boost::coroutine)
