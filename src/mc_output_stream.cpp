@@ -32,12 +32,12 @@ namespace conduit {
         write_unsigned_short(port);
         buffer.push_back(0x01);
         
-        pack();
+        prefix_length();
         buffer.push_back(0x01);
         buffer.push_back(0x00);
     }
 
-    void MinecraftOutputStream::pack() {
+    void MinecraftOutputStream::prefix_length() {
         MinecraftOutputStream buffer_length;
         buffer_length.write_varint(buffer.size());
         buffer.insert(buffer.begin(), buffer_length.get_buffer().begin(), buffer_length.get_buffer().end());

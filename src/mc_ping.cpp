@@ -5,9 +5,6 @@
 #include <boost/asio.hpp>
 #include <boost/asio/experimental/awaitable_operators.hpp>
 #include <iostream>
-#include "termcolor/termcolor.hpp"
-    
-#define TERMCOLOR_USE_ANSI_ESCAPE_SEQUENCES
 
 namespace conduit {
     namespace asio = boost::asio;

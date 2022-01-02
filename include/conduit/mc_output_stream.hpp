@@ -13,7 +13,7 @@ namespace conduit
         void write_string(const std::string& value);
         void write_unsigned_short(unsigned short value);
         void write_handshake(const asio::ip::address& address, unsigned short port);
-        void pack();
+        void prefix_length();
         std::vector<unsigned char>& get_buffer() { return buffer; };
     private:
         std::vector<unsigned char> buffer;

@@ -42,9 +42,8 @@ int main(int argc, char **argv) {
             for (auto&& port : port_range) {
                 if (num_of_tasks < size) {
                     asio::co_spawn(io, conduit::ping_mc_server_with_parse(std::move(ip), std::move(port), timeout), [&](auto eptr, bool success) {
-                        if (success) {
+                        if (success)
                             ++servers_found;
-                        }
                     });
                     ++num_of_tasks;
                 }
