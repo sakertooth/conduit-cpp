@@ -1,25 +1,24 @@
 # conduit-cpp
-conduit-cpp is a fast, C++20 coroutine based Minecraft server scanner.
+conduit-cpp is a fast Minecraft server scanner.
 
 ## Motivation
-This project was to get an idea for C++20, more specifically its coroutine feature.  
-The goal of learning more about C++ was also assumed when making this project.
-
-## Requirements for building
-  * [CMake](https://github.com/Kitware/CMake)
-  * [Boost.Asio](https://www.boost.org/doc/libs/develop/doc/html/boost_asio.html)
+The goal was to get more accustomed to C++ and asio.
   
 ## Help usage
 ```
-Usage: Conduit [options] target 
+Usage: Conduit 2.0 [options] target 
 
 Positional arguments:
-target       	the target range
+target           	The target range
 
 Optional arguments:
--h --help    	shows help message and exits [default: false]
--v --version 	prints version information and exits [default: false]
--p --ports   	the port range [default: "25565"]
--t --timeout 	timeout in milliseconds for connecting, writing, and reading [default: 1000]
--s --size    	the maximum # of scans occuring at a time [default: 256]
+-h --help        	shows help message and exits [default: false]
+-v --version     	prints version information and exits [default: false]
+-p --ports       	The port range [default: "25565"]
+-t --timeout     	Timeout in milliseconds for connecting to and reading from servers [default: 1000]
+-s --scan-size   	The maximum # of scans occuring at a time [default: 256]
+-b --buffer-size 	The size of buffer used to read from TCP streams [default: 1024]
+--ipv6           	IPv6 mode [default: false]
+-o --output      	Output to file [default: ""]
+-v --verbose     	Verbose mode [default: false]
 ```
