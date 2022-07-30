@@ -18,7 +18,7 @@ Optional arguments:
 -t --timeout     	Timeout in milliseconds for connecting to and reading from servers [default: 1000]
 -s --scan-size   	The maximum # of scans occuring at a time [default: 256]
 -b --buffer-size 	The size of buffer used to read from TCP streams [default: 1024]
--i --ipv6           IPv6 mode [default: false]
+-i --ipv6        	IPv6 mode [default: false]
 -o --output      	Output to file [default: ""]
 -v --verbose     	Verbose mode [default: false]
 ```
