@@ -1,17 +1,15 @@
 #include <iostream>
 #include <sstream>
-#include <boost/asio/ip/address.hpp>
-#include <boost/asio/ip/network_v4.hpp>
-#include <boost/system/error_code.hpp>
-#include "conduit/net_parser.hpp"
+#include "net_parser.hpp"
 
 namespace conduit {
-    using boost::system::error_code;
-    using boost::asio::ip::network_v4;
-    
-    network_v4 parse_targetrange(const std::string& str) {
-        //TODO: expand range types
-        return boost::asio::ip::make_network_v4(str);
+    std::variant<asio::ip::network_v4, asio::ip::network_v6> parse_targetrange(const std::string& str, bool isIPv6) {
+        if (!isIPv6) {
+            return asio::ip::make_network_v4(str);
+        }
+        else {
+            return asio::ip::make_network_v6(str);
+        }
     }
 
     std::vector<unsigned short> parse_portrange(const std::string& str) {
@@ -20,22 +18,17 @@ namespace conduit {
         std::string token;
 
         while (std::getline(ss, token, ',')) {
-            try {
-                std::size_t pos = token.find('-');
-                if (pos != std::string::npos) {
-                    auto min = std::stoi(token.substr(0, pos));
-                    auto max = std::stoi(token.substr(pos + 1));
-                    
-                    for (int i = min; i <= max; i++) {
-                        ports.push_back(i);
-                    }
-                }
-                else {
-                    ports.push_back(std::stoi(token));
+            std::size_t pos = token.find('-');
+            if (pos != std::string::npos) {
+                auto min = std::stoi(token.substr(0, pos));
+                auto max = std::stoi(token.substr(pos + 1));
+                
+                for (int i = min; i <= max; i++) {
+                    ports.push_back(i);
                 }
             }
-            catch (const std::invalid_argument& ex) {
-                std::cout << "An error occured while parsing the port range\n";
+            else {
+                ports.push_back(std::stoi(token));
             }
         }
 
