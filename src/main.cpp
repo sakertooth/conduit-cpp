@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
         .default_value<int>(1024)
         .scan<'i', int>();
 
-    parser.add_argument("--ipv6")
+    parser.add_argument("-i", "--ipv6")
         .help("IPv6 mode")
         .default_value(false)
         .implicit_value(true);
